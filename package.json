@@ -1,0 +1,43 @@
+{
+  "name": "jeff-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "jeffchoi <dev.jeffchoi@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "./node_modules/.bin/nodemon -e ts,tsx --exec ts-node ./src/index.ts",
+    "test": "nyc mocha --opts ./test/mocha.opts",
+    "build": "tsc",
+    "start": "pm2 start --name jeff-backend ./dist/index.js",
+    "prod": "yarn run build && yarn run start"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/joi": "^14.0.1",
+    "@types/jsonwebtoken": "^8.3.0",
+    "@types/kcors": "^2.2.3",
+    "@types/koa": "^2.0.47",
+    "@types/koa-bodyparser": "^4.2.1",
+    "@types/koa-router": "^7.0.35",
+    "@types/lodash": "^4.14.119",
+    "@types/mocha": "^5.2.5",
+    "nodemon": "^1.18.9",
+    "tslint": "^5.12.0",
+    "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "chai": "^4.2.0",
+    "dotenv": "^6.2.0",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "^8.4.0",
+    "kcors": "^2.2.2",
+    "koa": "^2.6.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "lodash": "^4.17.11",
+    "mocha": "^5.2.0",
+    "mysql": "^2.16.0",
+    "nyc": "^13.1.0",
+    "typeorm": "^0.2.9"
+  }
+}
