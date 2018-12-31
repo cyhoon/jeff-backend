@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "10.14"
+cache: yarn
+before_install:
+  - npm install -g typescript@3.2.2
+branches:
+  only:
+    - master
+notifications:
+  email:
+    recipients:
+      - dev.jeffchoi@gmail.com
