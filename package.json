@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "./node_modules/.bin/nodemon -e ts,tsx --exec ts-node ./src/index.ts",
-    "test": "nyc mocha --opts ./test/mocha.opts",
+    "test": "nyc mocha --opts ./test/mocha.opts --exit",
     "build": "tsc",
     "start": "pm2 start --name jeff-backend ./dist/index.js",
     "prod": "yarn run build && yarn run start"
@@ -26,9 +26,12 @@
     "typescript": "^3.2.2"
   },
   "dependencies": {
+    "@types/chai-http": "^3.0.5",
     "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
     "dotenv": "^6.2.0",
     "joi": "^14.3.1",
+    "joi-date-extensions": "^1.2.0",
     "jsonwebtoken": "^8.4.0",
     "kcors": "^2.2.2",
     "koa": "^2.6.2",
@@ -36,6 +39,7 @@
     "koa-router": "^7.4.0",
     "lodash": "^4.17.11",
     "mocha": "^5.2.0",
+    "moment": "^2.23.0",
     "mysql": "^2.16.0",
     "nyc": "^13.1.0",
     "ts-node": "^7.0.1",
