@@ -14,7 +14,6 @@ cache: yarn
 before_install:
   - npm install -g typescript@3.2.2
   - mysql -e 'CREATE DATABASE IF NOT EXISTS jeff;'
-  - mysql -e 'use jeff; CREATE TABLE `work_history` (`id` int NOT NULL AUTO_INCREMENT, `historyTime` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), `workType` varchar(255) NOT NULL, `userId`varchar(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;'
 env:
   env:
     - PORT=4000
