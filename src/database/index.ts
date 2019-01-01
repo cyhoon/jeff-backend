@@ -23,7 +23,7 @@ const connectDatabase = async () => {
       timezone: 'Asia/Seoul',
       extra: { max: 2, min: 1 },
       synchronize: true,
-      logging: false,
+      logging: true,
     };
 
     await createConnection(options);
