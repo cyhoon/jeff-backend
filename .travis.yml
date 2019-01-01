@@ -1,9 +1,31 @@
 language: node_js
 node_js:
   - "10.14"
+services:
+  - mysql
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+      - mysql-client
 cache: yarn
 before_install:
   - npm install -g typescript@3.2.2
+  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('new_password') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+  - sudo mysql_upgrade -u root -p1234
+  - sudo service mysql restart
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS jeff;'
+env:
+  env:
+  - PORT=4000
+  - SECRET_KEY=1234
+  - ENCRYPT_KEY=abcd
+  - DATABASE_HOST=127.0.0.1
+  - DATABASE_USER=root
+  - DATABASE_PASSWORD=1234
+  - DATABASE_NAME=jeff
 branches:
   only:
     - master
