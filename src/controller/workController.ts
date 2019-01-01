@@ -54,6 +54,7 @@ const getWorkHistoryByMonth = async (ctx: Context) => {
       },
     };
   } catch (error) {
+    console.error('error message: ', error.message);
     ctx.status = 500;
     ctx.body = {
       status: 'SERVER_ERROR',
