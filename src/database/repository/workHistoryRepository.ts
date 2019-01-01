@@ -9,7 +9,7 @@ const workHistoryRepository = (): WorkHistoryRepositoryInterface => {
   const repository: WorkHistoryRepositoryInterface = getManager().getRepository(workHistory);
 
   repository.getWorkHistoryByMonth = async (month: string, nextMonth: string): Promise<workHistory[]> => {
-    return repository.createQueryBuilder()
+    return repository.createQueryBuilder('workHistory')
       .where('workHistory.historyTime >= :month && workHistory.historyTime < :nextMonth')
       .setParameter('month', month)
       .setParameter('nextMonth', nextMonth)
