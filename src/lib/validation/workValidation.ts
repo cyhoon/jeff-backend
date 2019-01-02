@@ -3,9 +3,18 @@ import * as JoiExtension from 'joi-date-extensions';
 
 const Joi = BaseJoi.extend(JoiExtension);
 
+const workHistoryByMonthValidation = (schema) => {
+  const workHistoryByMonthSchema = {
+    month: Joi.date().format('YYYY-MM').required(),
+  };
+
+  const validate = Joi.validate(schema, workHistoryByMonthSchema);
+  return validate;
+}
+
 const workHistoryValidation = (schema) => {
   const workHistorySchema = {
-    month: Joi.date().format('YYYY-MM'),
+    workType: Joi.string().required(),
   };
 
   const validate = Joi.validate(schema, workHistorySchema);
@@ -13,5 +22,6 @@ const workHistoryValidation = (schema) => {
 };
 
 export {
+  workHistoryByMonthValidation,
   workHistoryValidation,
 };

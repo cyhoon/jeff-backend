@@ -2,8 +2,12 @@ import { Context } from 'koa';
 import * as moment from 'moment';
 import { workValidation } from '../lib/validation';
 import * as repository from '../database/repository';
+import { workHistory } from '../database/entity';
 
-const { workHistoryValidation } = workValidation;
+const {
+  workHistoryByMonthValidation,
+  workHistoryValidation,
+} = workValidation;
 
 const getWorkHistoryByMonth = async (ctx: Context) => {
   try {
@@ -11,7 +15,7 @@ const getWorkHistoryByMonth = async (ctx: Context) => {
       month: string;
     };
 
-    const isValid = workHistoryValidation(ctx.params);
+    const isValid = workHistoryByMonthValidation(ctx.params);
     if (isValid.error) {
       ctx.status = 400;
       ctx.body = {
@@ -63,6 +67,49 @@ const getWorkHistoryByMonth = async (ctx: Context) => {
   }
 };
 
+const saveWorkHistory = async (ctx: Context) => {
+  try {
+    interface RequestSchema {
+      workType: string;
+    };
+    
+    const isValid = workHistoryValidation(ctx.request.body);
+    if (isValid.error) {
+      ctx.status = 400;
+      ctx.body = {
+        name: 'WRONG_SCHEMA',
+        description: '요청 파라미터 에러',
+      };
+      return;
+    }
+
+    const { workType }: RequestSchema = ctx.request.body;
+
+    const workHistoryRepository = repository.workHistoryRepository();
+
+    const workHistoryData = new workHistory();
+
+    workHistoryData.userId = 'jeffchoi';
+    workHistoryData.workType = workType;
+  
+    await workHistoryRepository.save(workHistoryData);
+
+    ctx.status = 200;
+    ctx.body = {
+      status: 'SUCCESS',
+      message: '성공',
+    }
+  } catch (error) {
+    console.error('error message: ', error.message);
+    ctx.status = 500;
+    ctx.body = {
+      status: 'SERVER_ERROR',
+      message: '서버 에러',
+    };
+  }
+};
+
 export {
   getWorkHistoryByMonth,
+  saveWorkHistory,
 };

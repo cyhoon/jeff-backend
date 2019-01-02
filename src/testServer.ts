@@ -15,12 +15,13 @@ import database from './database';
 const app = new Koa();
 const router = new Router();
 
-router.use('/api', rootRouter.routes());
-app.use(router.routes());
-app.use(router.allowedMethods());
-
 app.use(Cors());
 app.use(BodyParser());
+
+router.use('/api', rootRouter.routes());
+
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 database();
 

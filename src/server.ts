@@ -18,19 +18,19 @@ class Server {
     this.app = new Koa();
     this.router = new Router();
 
-    this.setRoutes();
     this.setMiddleware();
+    this.setRoutes();
+  }
+
+  setMiddleware(): void {
+    this.app.use(Cors());
+    this.app.use(BodyParser());
   }
 
   setRoutes(): void {
     this.router.use('/api', rootRouter.routes());
     this.app.use(this.router.routes());
     this.app.use(this.router.allowedMethods());
-  }
-
-  setMiddleware(): void {
-    this.app.use(Cors());
-    this.app.use(BodyParser());
   }
 
   async connectDatabase(): Promise<void> {
