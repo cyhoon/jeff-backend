@@ -2,7 +2,7 @@ import { Context } from 'koa';
 import * as moment from 'moment';
 import { workValidation } from '../lib/validation';
 import * as repository from '../database/repository';
-import { workHistory } from '../database/entity';
+import { workHistoryEntity } from '../database/entity';
 
 const {
   workHistoryByMonthValidation,
@@ -87,12 +87,12 @@ const saveWorkHistory = async (ctx: Context) => {
 
     const workHistoryRepository = repository.workHistoryRepository();
 
-    const workHistoryData = new workHistory();
+    const workHistory = new workHistoryEntity();
 
-    workHistoryData.userId = 'jeffchoi';
-    workHistoryData.workType = workType;
+    workHistory.userId = 'jeffchoi';
+    workHistory.workType = workType;
   
-    await workHistoryRepository.save(workHistoryData);
+    await workHistoryRepository.save(workHistory);
 
     ctx.status = 200;
     ctx.body = {

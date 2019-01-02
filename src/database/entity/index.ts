@@ -1,5 +1,5 @@
 import workHistory from './workHistory';
 
 export { 
-  workHistory,
+  workHistory as workHistoryEntity,
 };

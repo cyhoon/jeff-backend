@@ -1,14 +1,14 @@
 import { Repository, getManager } from 'typeorm';
-import { workHistory } from '../entity';
+import { workHistoryEntity } from '../entity';
 
-interface WorkHistoryRepositoryInterface extends Repository<workHistory> {
-  getWorkHistoryByMonth?: (month: string, nextMonth: string) => Promise<workHistory[]>;
+interface WorkHistoryRepositoryInterface extends Repository<workHistoryEntity> {
+  getWorkHistoryByMonth?: (month: string, nextMonth: string) => Promise<workHistoryEntity[]>;
 };
 
 const workHistoryRepository = (): WorkHistoryRepositoryInterface => {
-  const repository: WorkHistoryRepositoryInterface = getManager().getRepository(workHistory);
+  const repository: WorkHistoryRepositoryInterface = getManager().getRepository(workHistoryEntity);
 
-  repository.getWorkHistoryByMonth = async (month: string, nextMonth: string): Promise<workHistory[]> => {
+  repository.getWorkHistoryByMonth = async (month: string, nextMonth: string): Promise<workHistoryEntity[]> => {
     return repository.createQueryBuilder('workHistory')
       .where('workHistory.historyTime >= :month && workHistory.historyTime < :nextMonth')
       .setParameter('month', month)
