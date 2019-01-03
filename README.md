@@ -21,6 +21,6 @@ Jeff-backend에서 사용하고 있는 기술 스택
 
 
 
-### Jeff-Backend CI/CD Structure
+## Jeff-Backend CI/CD Structure
 
 <img width="1057" alt="2019-01-03 10 47 17" src="https://user-images.githubusercontent.com/26565116/50640903-a134ea00-0fa9-11e9-9faf-1a5155515958.png">
