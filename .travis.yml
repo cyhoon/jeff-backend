@@ -37,6 +37,7 @@ deploy:
     bucket: jeff-service-bucket
     region: ap-northeast-2
     skip_cleanup: true
+    local_dir: deploy
     wait-until-deployed: true
     on:
       repo: jeffchoi72/jeff-backend #Github 주소
