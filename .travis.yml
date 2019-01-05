@@ -12,9 +12,13 @@ addons:
       - mysql-client
 cache: yarn
 before_install:
+  - npm install -g yarn
   - npm install -g typescript@3.2.2
   - mysql -e 'CREATE DATABASE IF NOT EXISTS jeff;'
   - mysql -e 'use jeff; CREATE TABLE `work_history` (`id` int NOT NULL AUTO_INCREMENT, `historyTime` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), `workType` varchar(255) NOT NULL, `userId`varchar(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;'
+  - zip -r jeff-backend *
+  - mkdir -p deploy
+  - mv jeff-backend.zip deploy/jeff-backend.zip
 env:
   env:
     - PORT=4000
@@ -26,6 +30,17 @@ env:
 branches:
   only:
     - master
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: jeff-service-bucket
+    region: ap-northeast-2
+    skip_cleanup: true
+    wait-until-deployed: true
+    on:
+      repo: jeffchoi72/jeff-backend #Github 주소
+      branch: master
 notifications:
   email:
     recipients:
