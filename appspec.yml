@@ -1,5 +1,5 @@
 version: 0.0
 os: linux
 files:
-  - source:  /jeff-backend
+  - source:  /
     destination: /home/ubuntu/deployment/jeff-backend
