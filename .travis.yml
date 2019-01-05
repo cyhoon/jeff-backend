@@ -42,6 +42,19 @@ deploy:
     on:
       repo: jeffchoi72/jeff-backend #Github 주소
       branch: master
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: jeff-service-bucket
+    key: jeff-backend.zip
+    bundle_type: zip
+    application: jeff-service
+    deployment_group: jeff-service-group
+    region: ap-northeast-2
+    wait-until-deployed: true
+    on:
+      repo: jeffchoi72/jeff-backend
+      branch: master
 notifications:
   email:
     recipients:
