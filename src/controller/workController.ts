@@ -46,7 +46,7 @@ const getWorkHistoryByMonth = async (ctx: Context) => {
       }
 
       // 요소를 찾지 못했다면 새롭게 배열을 추가한다.
-      workHistoriesTime.push({ workDate, workTime: 0 });
+      workHistoriesTime.push({ workDate, workTime: 1 });
     });
 
     ctx.status = 200;
