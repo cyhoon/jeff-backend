@@ -9,7 +9,7 @@
     "test": "nyc mocha --opts ./test/mocha.opts --exit",
     "build": "tsc",
     "start": "node ./dist/index.js",
-    "prod": "yarn run build && yarn run start"
+    "prod": "yarn build && yarn start"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
