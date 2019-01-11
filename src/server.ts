@@ -6,6 +6,8 @@ import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import * as BodyParser from 'koa-bodyparser';
 import * as Cors from 'kcors';
+import Logger from './lib/logger';
+import * as KoaLogger from 'koa-pino-logger';
 
 import rootRouter from './router';
 import database from './database';
@@ -25,6 +27,7 @@ class Server {
   setMiddleware(): void {
     this.app.use(Cors());
     this.app.use(BodyParser());
+    this.app.use(KoaLogger({ prettyPrint: true }));
   }
 
   setRoutes(): void {
@@ -35,20 +38,19 @@ class Server {
 
   async connectDatabase(): Promise<void> {
     try {
-      console.info('Try connect database');
+      Logger.info('Try connect database');
       await database();
-      console.info('Success connection database');
+      Logger.info('Success connection database');
     } catch (error) {
-      console.error('Fail connection database');
-      console.error(`Error Message: ${error.message}`);
+      Logger.error('Fail connection database');
+      Logger.error(`Error Message: ${error.message}`);
       throw new Error(error);
     }
   }
 
   listen(): void {
     this.app.listen(PORT);
-
-    console.info(`Jeff-Backend application is up and running on port ${PORT}`);
+    Logger.info(`Jeff-Backend application is up and running on port ${PORT}`);
   }
 
   async start(): Promise<void> {
