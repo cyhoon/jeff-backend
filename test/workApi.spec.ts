@@ -77,4 +77,36 @@ describe('work api 테스트', () => {
         });
     });
   });
+
+  describe('[GET] /work/history/month/:month/:day 테스트', () => {
+    it('month 파라미터가 유효하지 않는 포맷일때 400이 나와야함', (done) => {
+      chai.request(testServer)
+        .get(workHistoryMonthUrl + '/3ab/01')
+        .end((error, response) => {
+          expect(error).to.be.null;
+          expect(response).to.have.status(400);
+          done();
+        });
+    });
+
+    it('day 파라미터가 유효하지 않는 포맷일때 400이 나와야함', (done) => {
+      chai.request(testServer)
+        .get(workHistoryMonthUrl + '/2019-01/abc')
+        .end((error, response) => {
+          expect(error).to.be.null;
+          expect(response).to.have.status(400);
+          done();
+        });
+    });
+
+    it('요청파라미터를 알맞게 보내면 응답 상태 코드는 200이다', (done) => {
+      chai.request(testServer)
+        .get(workHistoryMonthUrl + '/2019-01/01')
+        .end((error, response) => {
+          expect(error).to.be.null;
+          expect(response).to.have.status(200);
+          done();
+        });
+    });
+  });
 });

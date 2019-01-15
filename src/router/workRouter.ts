@@ -5,5 +5,6 @@ const workRouter: Router = new Router();
 
 workRouter.post('/history', workController.saveWorkHistory);
 workRouter.get('/history/month/:month', workController.getWorkHistoryByMonth);
+workRouter.get('/history/month/:month/:day', workController.getWorkHistoryByDay);
 
 export default workRouter;

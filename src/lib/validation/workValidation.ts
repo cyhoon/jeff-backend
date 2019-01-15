@@ -10,7 +10,17 @@ const workHistoryByMonthValidation = (schema) => {
 
   const validate = Joi.validate(schema, workHistoryByMonthSchema);
   return validate;
-}
+};
+
+const workHistoryByDayValidation = (schema) => {
+  const workHistoryByDayValidation = {
+    month: Joi.date().format('YYYY-MM').required(),
+    day: Joi.date().format('DD').required(),
+  };
+
+  const validate = Joi.validate(schema, workHistoryByDayValidation);
+  return validate;
+};
 
 const workHistoryValidation = (schema) => {
   const workHistorySchema = {
@@ -23,5 +33,6 @@ const workHistoryValidation = (schema) => {
 
 export {
   workHistoryByMonthValidation,
+  workHistoryByDayValidation,
   workHistoryValidation,
 };

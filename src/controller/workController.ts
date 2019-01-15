@@ -6,6 +6,7 @@ import { workHistoryEntity } from '../database/entity';
 
 const {
   workHistoryByMonthValidation,
+  workHistoryByDayValidation,
   workHistoryValidation,
 } = workValidation;
 
@@ -51,7 +52,7 @@ const getWorkHistoryByMonth = async (ctx: Context) => {
 
     ctx.status = 200;
     ctx.body = {
-      status: 'SUCCESS',
+      name: 'SUCCESS',
       message: 'work history log 데이터 조회 성공',
       data: {
         workHistories: workHistoriesTime,
@@ -61,7 +62,49 @@ const getWorkHistoryByMonth = async (ctx: Context) => {
     console.error('error message: ', error.message);
     ctx.status = 500;
     ctx.body = {
-      status: 'SERVER_ERROR',
+      name: 'SERVER_ERROR',
+      message: '서버 에러',
+    };
+  }
+};
+
+const getWorkHistoryByDay = async (ctx: Context) => {
+  try {
+    interface RequestSchema {
+      month: string;
+      day: string;
+    };
+
+    const isValid = workHistoryByDayValidation(ctx.params);
+    if (isValid.error) {
+      ctx.status = 400;
+      ctx.body = {
+        name: 'WRONG_SCHEMA',
+        description: '요청 파라미터 에러',
+      };
+      return;
+    }
+
+    const { month, day }: RequestSchema = ctx.params;
+
+    const nowDay = moment(`${month}-${day}`).format('YYYY-MM-DD');
+    const nextDay = moment(`${month}-${day}`).add(1, 'd').format('YYYY-MM-DD');
+
+    const workHistoryRepository = repository.workHistoryRepository();
+    const workHistory = await workHistoryRepository.getWorkHistoryByDay(nowDay, nextDay);
+
+    ctx.status = 200;
+    ctx.body = {
+      name: 'SUCCESS',
+      message: 'work history detail log 데이터 조회 성공',
+      data: {
+        workHistory,
+      },
+    };
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = {
+      name: 'SERVER_ERROR',
       message: '서버 에러',
     };
   }
@@ -96,14 +139,14 @@ const saveWorkHistory = async (ctx: Context) => {
 
     ctx.status = 200;
     ctx.body = {
-      status: 'SUCCESS',
+      name: 'SUCCESS',
       message: '성공',
     }
   } catch (error) {
     console.error('error message: ', error.message);
     ctx.status = 500;
     ctx.body = {
-      status: 'SERVER_ERROR',
+      name: 'SERVER_ERROR',
       message: '서버 에러',
     };
   }
@@ -111,5 +154,6 @@ const saveWorkHistory = async (ctx: Context) => {
 
 export {
   getWorkHistoryByMonth,
+  getWorkHistoryByDay,
   saveWorkHistory,
 };
