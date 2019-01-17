@@ -91,17 +91,41 @@ const getWorkHistoryByDay = async (ctx: Context) => {
     const nextDay = moment(`${month}-${day}`).add(1, 'd').format('YYYY-MM-DD');
 
     const workHistoryRepository = repository.workHistoryRepository();
-    const workHistory = await workHistoryRepository.getWorkHistoryByDay(nowDay, nextDay);
+    const workHistories = await workHistoryRepository.getWorkHistoryByDay(nowDay, nextDay);
+
+    const workDetailHistories = [];
+
+    for(let i=0; i<=23; i++) {
+      const targetHour = moment().set({ hour: i }).format('HH');
+
+      const isWork = workHistories.filter(workHistory => {
+        const hour = moment(workHistory.historyTime).add(-1, 'hour').format('HH');
+        if (targetHour === hour) {
+          return workHistory;
+        }
+      });
+
+      if (isWork.length >= 1 && isWork[0].workType === 'ING') {
+        workDetailHistories.push({ time: targetHour, isWork: true });
+      } else {
+        workDetailHistories.push({ time: targetHour, isWork: false }); 
+      }
+    }
+
+    const allWorkTime = workHistories.filter((workHistory) => workHistory.workType === 'ING').length;
 
     ctx.status = 200;
     ctx.body = {
       name: 'SUCCESS',
       message: 'work history detail log 데이터 조회 성공',
       data: {
-        workHistory,
+        // workHistories,
+        allWorkTime,
+        workDetailHistories,
       },
     };
   } catch (error) {
+    console.log('Server error: ', error.message);
     ctx.status = 500;
     ctx.body = {
       name: 'SERVER_ERROR',
