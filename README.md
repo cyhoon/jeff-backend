@@ -31,7 +31,9 @@ Jeff-backend에서 사용하고 있는 기술 스택
 
 ## API Document
 
-| 메소드 | 주소                           | 의미                                  |
-| ------ | ------------------------------ | ------------------------------------- |
-| GET    | /api/work/history/month/:month | 한달간 기록한 업무시간을 조회하는 API |
-| POST   | /api/work/history              | 업무시간을 기록하는 API               |
+| 메소드 | 주소                                | 의미                                  |
+| ------ | ----------------------------------- | ------------------------------------- |
+| GET    | /api/work/history/month/:month      | 한달간 기록한 업무시간을 조회하는 API |
+| POST   | /api/work/history                   | 업무시간을 기록하는 API               |
+| GET    | /api/work/history/month/:month/:day | 해당 날짜 업무시간 상세조회 API       |
+
